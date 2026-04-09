@@ -1,4 +1,4 @@
-// ===== Nova AI — SMART + GENERIC RESPONSE SYSTEM =====
+// ===== Nova AI — HUMAN-LIKE CHATBOT =====
 (function () {
     'use strict';
 
@@ -11,7 +11,25 @@
     let lastIntent = null;
     let logs = [];
 
-    // ===== GENERIC RESPONSES (100+) =====
+    // ===== GREETINGS =====
+    const greetings = ["hi", "hello", "hey", "hii", "heyy", "hola"];
+    const greetingReplies = [
+        "Hey there! 👋 How can I help you today?",
+        "Hello! 😊 What’s on your mind?",
+        "Hi! Nice to see you here 🚀",
+        "Hey! How can I assist you?",
+        "Hello 👋 Ask me anything!"
+    ];
+
+    const howAreYou = ["how are you", "how r you", "how are u"];
+    const howReplies = [
+        "I'm doing great! 😄 Ready to help you!",
+        "All good here 🚀 What about you?",
+        "Feeling awesome! Thanks for asking 😊",
+        "I'm always ready to help 🔥"
+    ];
+
+    // ===== GENERIC (100+) =====
     const genericResponses = [
         "That's interesting! Tell me more.",
         "Hmm… can you explain that a bit more?",
@@ -66,55 +84,11 @@
         "What’s your main doubt here?",
         "That’s something worth exploring.",
         "I see — continue please.",
-        "Let’s analyze it together.",
-
-        "Nice, tell me more!",
-        "That’s quite interesting!",
-        "What exactly are you looking for?",
-        "I can help — just expand it a bit.",
-        "That’s a great thought!",
-        "Let’s work through it.",
-        "I’m curious now 😄",
-        "Explain a bit more please.",
-        "That sounds important.",
-        "Let’s explore it step by step.",
-
-        "That’s something new!",
-        "I like this question.",
-        "Can you add more detail?",
-        "Let’s understand it better.",
-        "That’s a good discussion point.",
-        "Tell me more 👍",
-        "I’d love to help with that.",
-        "Let’s think about it.",
-        "That’s worth exploring.",
-        "Go on, I’m listening.",
-
-        "That’s interesting 🤔",
-        "Let’s dig deeper into it.",
-        "Explain more please.",
-        "I’m here — continue.",
-        "That’s a cool idea!",
-        "What exactly do you mean?",
-        "Let’s explore all possibilities.",
-        "I see — tell me more.",
-        "That’s a valid point.",
-        "Let’s go step by step.",
-
-        "That’s something we can solve!",
-        "I’m curious — explain more.",
-        "Let’s break it down simply.",
-        "Nice thinking!",
-        "That’s an interesting direction.",
-        "Tell me more details.",
-        "I’m ready to help!",
-        "Let’s explore together 🚀",
-        "That’s a good question!",
-        "I like this discussion."
+        "Let’s analyze it together."
     ];
 
-    function getRandomGeneric() {
-        return genericResponses[Math.floor(Math.random() * genericResponses.length)];
+    function random(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
     }
 
     // ===== PREPROCESS =====
@@ -125,35 +99,25 @@
     // ===== INTENT =====
     function classifyIntent(text) {
 
+        if (greetings.some(g => text.includes(g))) return "greeting";
+        if (howAreYou.some(h => text.includes(h))) return "how";
+
         const intents = {
-            fees: ["fee", "fees", "tuition", "payment", "cost"],
-            exam: ["exam", "test", "schedule", "result", "date"],
+            fees: ["fee", "fees", "tuition", "payment"],
+            exam: ["exam", "test", "schedule"],
             hostel: ["hostel", "room", "stay"],
             coding: ["code", "programming", "javascript", "python"],
-            career: ["placement", "job", "resume", "interview"],
-            ai: ["ai", "machine learning", "ml"]
+            career: ["placement", "job", "resume"],
+            ai: ["ai", "ml", "machine learning"]
         };
 
         for (let intent in intents) {
             for (let word of intents[intent]) {
-                if (text.includes(word)) {
-                    return intent;
-                }
+                if (text.includes(word)) return intent;
             }
         }
 
         return "general";
-    }
-
-    // ===== ENTITY =====
-    function extractEntities(text) {
-        let date = text.match(/\d{1,2}\/\d{1,2}\/\d{2,4}/);
-        let sem = text.match(/sem\s?\d/i);
-
-        return {
-            date: date ? date[0] : null,
-            semester: sem ? sem[0] : null
-        };
     }
 
     // ===== RESPONSE =====
@@ -161,50 +125,53 @@
 
         let clean = preprocess(userMessage);
         let intent = classifyIntent(clean);
-        let entities = extractEntities(userMessage);
 
         let response = "";
 
         switch (intent) {
+
+            case "greeting":
+                response = random(greetingReplies);
+                break;
+
+            case "how":
+                response = random(howReplies);
+                break;
 
             case "fees":
                 response = "💰 Fees are around ₹80,000/year.";
                 break;
 
             case "exam":
-                response = "📝 Exams are scheduled by the college before semester end.";
+                response = "📝 Exams are scheduled before semester end.";
                 break;
 
             case "hostel":
-                response = "🏠 Hostel with mess and WiFi available.";
+                response = "🏠 Hostel with mess & WiFi available.";
                 break;
 
             case "coding":
-                response = "💻 I can help with coding, projects, and debugging!";
+                response = "💻 I can help with coding, projects, debugging!";
                 break;
 
             case "career":
-                response = "📊 Focus on DSA, projects, and internships for placements.";
+                response = "📊 Focus on DSA, projects & internships.";
                 break;
 
             case "ai":
-                response = "🤖 AI includes ML, deep learning, NLP, etc.";
+                response = "🤖 AI includes ML, NLP, deep learning.";
                 break;
 
             default:
-                response = getRandomGeneric() + "\n\n💡 You can ask about coding, AI, college, career, or anything!";
+                response = random(genericResponses) +
+                    "\n\n💡 Ask me about coding, AI, career, or anything!";
         }
 
-        // Context memory
         if (lastIntent && intent === "general") {
             response = `Earlier you were asking about ${lastIntent}.\n\n` + response;
         }
 
         lastIntent = intent;
-
-        if (entities.date) response += `\n📅 Date: ${entities.date}`;
-        if (entities.semester) response += `\n🎓 Semester: ${entities.semester}`;
-
         logs.push({ userMessage, response });
 
         return response;
@@ -229,7 +196,6 @@
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    // ===== SEND =====
     function sendMessage() {
         let text = messageInput.value.trim();
         if (!text) return;
@@ -246,7 +212,6 @@
         }, 300);
     }
 
-    // ===== EVENTS =====
     sendBtn.addEventListener('click', sendMessage);
 
     messageInput.addEventListener('input', () => {
