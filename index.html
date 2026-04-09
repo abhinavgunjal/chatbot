@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova AI - A modern, intelligent chatbot assistant with a beautiful interface">
+    <title>Nova AI — Intelligent Chat Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Ambient Background -->
+        <div class="ambient-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logoGrad)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M2 17L12 22L22 17" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <defs>
+                                <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22">
+                                    <stop stop-color="#a78bfa" />
+                                    <stop offset="1" stop-color="#6366f1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Nova AI</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <button class="new-chat-btn" id="newChatBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>New Chat</span>
+            </button>
+
+            <div class="chat-history" id="chatHistory">
+                <div class="history-section-title">Recent</div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">U</div>
+                    <span class="user-name">User</span>
+                </div>
+                <div class="made-by">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span>Made by <strong>Abhinav</strong> & <strong>Sahil</strong></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <!-- Mobile Header -->
+            <header class="chat-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open sidebar">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <div class="header-info">
+                    <h1 class="header-title">Nova AI</h1>
+                    <span class="header-status">
+                        <span class="status-dot"></span>
+                        Online
+                    </span>
+                </div>
+                <button class="header-action" id="clearChatBtn" aria-label="Clear chat">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3,6 5,6 21,6" />
+                        <path d="M19,6V20a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6M8,6V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6" />
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Messages Container -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-logo">
+                        <div class="welcome-logo-ring"></div>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#wGrad)" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M2 17L12 22L22 17" stroke="url(#wGrad)" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="url(#wGrad)" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <defs>
+                                <linearGradient id="wGrad" x1="2" y1="2" x2="22" y2="22">
+                                    <stop stop-color="#a78bfa" />
+                                    <stop offset="1" stop-color="#6366f1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2 class="welcome-title">How can I help you today?</h2>
+                    <p class="welcome-subtitle">I'm Nova, your AI assistant. Ask me anything — from creative ideas to
+                        technical questions.</p>
+                    <div class="suggestion-grid">
+                        <button class="suggestion-card" data-prompt="Tell me a creative story about space exploration">
+                            <div class="suggestion-icon">🚀</div>
+                            <div class="suggestion-text">
+                                <strong>Creative Story</strong>
+                                <span>About space exploration</span>
+                            </div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Explain quantum computing in simple terms">
+                            <div class="suggestion-icon">⚛️</div>
+                            <div class="suggestion-text">
+                                <strong>Explain</strong>
+                                <span>Quantum computing simply</span>
+                            </div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Help me write a professional email">
+                            <div class="suggestion-icon">✉️</div>
+                            <div class="suggestion-text">
+                                <strong>Write</strong>
+                                <span>A professional email</span>
+                            </div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="What are some tips for productivity?">
+                            <div class="suggestion-icon">💡</div>
+                            <div class="suggestion-text">
+                                <strong>Tips</strong>
+                                <span>For better productivity</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages will be inserted here -->
+                <div class="messages-list" id="messagesList"></div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea class="message-input" id="messageInput" placeholder="Message Nova..." rows="1"
+                        aria-label="Type your message"></textarea>
+                    <button class="send-btn" id="sendBtn" aria-label="Send message" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
